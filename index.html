@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
@@ -1572,7 +1571,7 @@
                 
                     </div>
                 </div>
-                            
+                
                 <div id="module-memory" class="module-content">
                     <div class="bomb-container">
                         <div class="module-header">
@@ -1636,33 +1635,48 @@
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">1</span>
-                                    <input type="text" class="stage-input" id="stage-1-display" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-1-button" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-1-position" placeholder="?" maxlength="1" readonly>
+                                    <input type="text" class="stage-input" id="stage-1-display" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-1-button" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-1-position" placeholder="?" maxlength="1"
+                                        readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">2</span>
-                                    <input type="text" class="stage-input" id="stage-2-display" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-2-button" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-2-position" placeholder="?" maxlength="1" readonly>
+                                    <input type="text" class="stage-input" id="stage-2-display" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-2-button" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-2-position" placeholder="?" maxlength="1"
+                                        readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">3</span>
-                                    <input type="text" class="stage-input" id="stage-3-display" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-3-button" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-3-position" placeholder="?" maxlength="1" readonly>
+                                    <input type="text" class="stage-input" id="stage-3-display" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-3-button" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-3-position" placeholder="?" maxlength="1"
+                                        readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">4</span>
-                                    <input type="text" class="stage-input" id="stage-4-display" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-4-button" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-4-position" placeholder="?" maxlength="1" readonly>
+                                    <input type="text" class="stage-input" id="stage-4-display" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-4-button" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-4-position" placeholder="?" maxlength="1"
+                                        readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">5</span>
-                                    <input type="text" class="stage-input" id="stage-5-display" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-5-button" placeholder="?" maxlength="1" readonly>
-                                    <input type="text" class="stage-input" id="stage-5-position" placeholder="?" maxlength="1" readonly>
+                                    <input type="text" class="stage-input" id="stage-5-display" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-5-button" placeholder="?" maxlength="1"
+                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-5-position" placeholder="?" maxlength="1"
+                                        readonly="">
                                 </div>
                             </div>
                         </div>
@@ -1741,14 +1755,16 @@
                     </div>
                 </div>
             </div>
+
+            
         </div>
     </div>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>拆弹专家解密助手 &copy; 2025 | 保持冷静，你能成功拆除炸弹！</p>
+        <p>拆弹专家解密助手 © 2025 | 保持冷静，你能成功拆除炸弹！</p>
     </footer>
-    </div>
+
 
     <script>
         // 全局变量
@@ -2330,33 +2346,81 @@
             shouldCutWire(serialLastDigit) {
                 const { led, color, star, battery, parallel } = this.state;
 
-                // 基本规则
+                // 根据用户提供的新规则表进行判断
+                // 亮红灯相关规则
+                if (led === 'on' && color === 'red') {
+                    // 亮红灯，不管有没有★标记，都是B类指引：电池≥2剪断
+                    return battery === '2'; // '2' 表示2个或更多
+                }
+
+                // 亮蓝灯相关规则
                 if (led === 'on' && color === 'blue') {
-                    return true;
+                    // 亮蓝灯，不管有没有★标记，都是P类指引：有Parallel剪断
+                    return parallel === 'yes';
                 }
 
-                if (led === 'on' && color === 'white') {
-                    // 根据序列号末位判断
-                    return serialLastDigit !== null && serialLastDigit % 2 === 0;
-                }
-
-                if (led === 'off' && color === 'yellow') {
-                    return true;
-                }
-
-                if (led === 'off' && color === 'black' && star === 'yes') {
-                    // 根据序列号末位判断
-                    return serialLastDigit !== null && serialLastDigit % 2 === 1;
-                }
-
-                // 特殊规则：序列号末位为偶数时的额外检查
-                if (serialLastDigit !== null && serialLastDigit % 2 === 0) {
-                    if (battery === '2' && parallel === 'yes') {
-                        return true;
+                // 亮红蓝灯相关规则
+                if (led === 'on' && color === 'red-blue') {
+                    if (star === 'yes') {
+                        // 亮红蓝灯有★标记，D类指引：不剪
+                        return false;
+                    } else {
+                        // 亮红蓝灯无★标记，S类指引：末位偶数剪断
+                        return serialLastDigit !== null && serialLastDigit % 2 === 0;
                     }
                 }
 
-                // 其他情况，不剪断
+                // 亮白灯相关规则
+                if (led === 'on' && color === 'white') {
+                    if (star === 'yes') {
+                        // 亮白灯有★标记，B类指引：电池≥2剪断
+                        return battery === '2';
+                    } else {
+                        // 亮白灯无★标记，D类指引：不剪
+                        return false;
+                    }
+                }
+
+                // 灭红灯相关规则
+                if (led === 'off' && color === 'red') {
+                    if (star === 'yes') {
+                        // 灭红灯有★标记，C类指引：剪断
+                        return true;
+                    } else {
+                        // 灭红灯无★标记，S类指引：末位偶数剪断
+                        return serialLastDigit !== null && serialLastDigit % 2 === 0;
+                    }
+                }
+
+                // 灭蓝灯相关规则
+                if (led === 'off' && color === 'blue') {
+                    if (star === 'yes') {
+                        // 灭蓝灯有★标记，D类指引：不剪
+                        return false;
+                    } else {
+                        // 灭蓝灯无★标记，S类指引：末位偶数剪断
+                        return serialLastDigit !== null && serialLastDigit % 2 === 0;
+                    }
+                }
+
+                // 灭红蓝灯相关规则
+                if (led === 'off' && color === 'red-blue') {
+                    if (star === 'yes') {
+                        // 灭红蓝灯有★标记，P类指引：有Parallel剪断
+                        return parallel === 'yes';
+                    } else {
+                        // 灭红蓝灯无★标记，S类指引：末位偶数剪断
+                        return serialLastDigit !== null && serialLastDigit % 2 === 0;
+                    }
+                }
+
+                // 灭白灯相关规则
+                if (led === 'off' && color === 'white') {
+                    // 灭白灯，不管有没有★标记，都是C类指引：剪断
+                    return true;
+                }
+
+                // 默认情况，不剪断
                 return false;
             }
 
@@ -3205,6 +3269,7 @@
             document.getElementById('reset-sequence-module').addEventListener('click', resetSequenceModule);
         });
     </script>
+
 </body>
 
 </html>
