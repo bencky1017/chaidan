@@ -1755,8 +1755,6 @@
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
 
@@ -2555,7 +2553,7 @@
                 let actionValue = shouldPressPosition;
 
                 // 根据阶段和规则确定操作类型
-                if (this.currentStage === 2 && (this.currentDisplay === 1 || this.currentDisplay === 4)) {
+                if (this.currentStage === 2 && this.currentDisplay === 1) {
                     actionType = '数字';
                     actionValue = shouldPressNumber;
                 } else if (this.currentStage === 3 && (this.currentDisplay === 1 || this.currentDisplay === 2)) {
@@ -2892,7 +2890,7 @@
                 let actionValue = shouldPressPosition;
 
                 // 根据阶段和规则确定操作类型
-                if (this.currentStage === 2 && (this.currentDisplay === 1 || this.currentDisplay === 4)) {
+                if (this.currentStage === 2 && this.currentDisplay === 1) {
                     actionType = '数字';
                     actionValue = shouldPressNumber;
                 } else if (this.currentStage === 3 && (this.currentDisplay === 1 || this.currentDisplay === 2)) {
