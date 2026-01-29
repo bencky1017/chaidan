@@ -1,4 +1,6 @@
-<html lang="zh-CN"><head>
+<html lang="zh-CN">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>拆弹专家 - 解密助手</title>
@@ -40,14 +42,19 @@
         }
 
         /* 标题样式 */
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 700;
             margin-bottom: 1rem;
         }
 
         h1 {
             font-size: 3rem;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -156,7 +163,7 @@
             gap: 0.5rem;
             margin-top: 0.5rem;
         }
-        
+
         .word-item {
             background-color: rgba(59, 130, 246, 0.1);
             color: var(--secondary-color);
@@ -168,19 +175,19 @@
             cursor: pointer;
             border: 1px solid transparent;
         }
-        
+
         .word-item:hover {
             background-color: rgba(59, 130, 246, 0.2);
             border-color: var(--secondary-color);
             transform: translateY(-2px);
         }
-        
+
         .word-item.highlight {
             background-color: var(--secondary-color);
             color: white;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
-        
+
         .word-item.correct-word {
             background-color: var(--success-color);
             color: white;
@@ -248,6 +255,140 @@
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
+        /* Morse Code Module Styles */
+        .morse-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .letters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .morse-letter-btn {
+            background-color: var(--dark-color);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .morse-letter-btn:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .morse-letter-btn.selected {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .selected-display {
+            background-color: #0f172a;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .results-container {
+            background-color: #0f172a;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .result-item {
+            background-color: var(--dark-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            background-color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .result-word {
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .result-frequency {
+            color: var(--warning-color);
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+        }
+
+        .placeholder {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .morse-table {
+            margin: 1rem 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 700;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .table tr:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
         /* 线路容器样式 */
         .wire-container {
             position: relative;
@@ -289,7 +430,7 @@
         }
 
         .wire.incorrect {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
         }
 
         .wire-red {
@@ -541,6 +682,77 @@
             flex-wrap: wrap;
         }
 
+        .wire-color-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            min-width: 100px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wire-color-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .wire-color-btn:hover::before {
+            left: 100%;
+        }
+
+        .wire-color-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .wire-color-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .wire-red-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 0 #b91c1c;
+        }
+
+        .wire-yellow-btn {
+            background: linear-gradient(135deg, #eab308, #ca8a04);
+            box-shadow: 0 4px 0 #a16207;
+            color: #1e293b;
+        }
+
+        .wire-blue-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            box-shadow: 0 4px 0 #1d4ed8;
+        }
+
+        .wire-black-btn {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            box-shadow: 0 4px 0 #020617;
+            border: 2px solid #334155;
+        }
+
+        .wire-white-btn {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            box-shadow: 0 4px 0 #cbd5e1;
+            color: #1e293b;
+        }
+
         .feature-btn {
             flex: 1;
             min-width: 80px;
@@ -612,25 +824,37 @@
 
         /* 动画 */
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 1;
             }
+
             50% {
                 opacity: 0.5;
             }
         }
 
         @keyframes shake {
-            10%, 90% {
+
+            10%,
+            90% {
                 transform: translateX(-1px);
             }
-            20%, 80% {
+
+            20%,
+            80% {
                 transform: translateX(2px);
             }
-            30%, 50%, 70% {
+
+            30%,
+            50%,
+            70% {
                 transform: translateX(-4px);
             }
-            40%, 60% {
+
+            40%,
+            60% {
                 transform: translateX(4px);
             }
         }
@@ -640,6 +864,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -962,22 +1187,22 @@
             .main-content {
                 flex-direction: column;
             }
-            
+
             .stage-tracker {
                 overflow-x: auto;
                 padding: 0.75rem;
             }
-            
+
             .stage-input,
             .stage-header-item {
                 font-size: 0.875rem;
                 padding: 0.25rem;
             }
-            
+
             .module-nav {
                 flex: none;
             }
-            
+
             h1 {
                 font-size: 2.5rem;
             }
@@ -987,27 +1212,28 @@
             .container {
                 padding: 1rem;
             }
-            
+
             h1 {
                 font-size: 2rem;
             }
-            
+
             h2 {
                 font-size: 1.5rem;
             }
-            
+
             .module-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
             }
-            
+
             .instruction-actions {
                 flex-direction: column;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
@@ -1054,6 +1280,12 @@
                                     <span class="difficulty-badge difficulty-hard">困难</span>
                                 </button>
                             </li>
+                            <li class="nav-item">
+                                <button id="tab-morse" class="module-tab" data-module="module-morse">
+                                    <span>📡 摩斯密码</span>
+                                    <span class="difficulty-badge difficulty-medium">中等</span>
+                                </button>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -1088,27 +1320,52 @@
                             <div class="input-header">
                                 <h3 class="input-title">线路输入</h3>
                                 <div class="color-legend">
-                                    <span class="color-swatch color-red"></span>1=红
-                                    <span class="color-swatch color-yellow"></span>2=黄
-                                    <span class="color-swatch color-blue"></span>3=蓝
-                                    <span class="color-swatch color-black"></span>4=黑
-                                    <span class="color-swatch color-white"></span>5=白
+                                    <span class="color-swatch color-red"></span>红
+                                    <span class="color-swatch color-yellow"></span>黄
+                                    <span class="color-swatch color-blue"></span>蓝
+                                    <span class="color-swatch color-black"></span>黑
+                                    <span class="color-swatch color-white"></span>白
                                 </div>
                             </div>
 
-                            <div class="input-container">
-                                <input type="text" id="wire-input" class="wire-input" placeholder="输入线路代码，如：11324（表示红红蓝黄黑）" maxlength="6">
-                                <div class="input-icon" title="输入3-6位数字，每个数字代表一种颜色">ℹ️</div>
+                            <div class="button-group mb-4 flex justify-center flex-wrap gap-3 px-4">
+                                <button class="wire-color-btn wire-red-btn" data-color="1">
+                                    <span class="color-swatch color-red"></span>红色
+                                </button>
+                                <button class="wire-color-btn wire-yellow-btn" data-color="2">
+                                    <span class="color-swatch color-yellow"></span>黄色
+                                </button>
+                                <button class="wire-color-btn wire-blue-btn" data-color="3">
+                                    <span class="color-swatch color-blue"></span>蓝色
+                                </button>
+                                <button class="wire-color-btn wire-black-btn" data-color="4">
+                                    <span class="color-swatch color-black"></span>黑色
+                                </button>
+                                <button class="wire-color-btn wire-white-btn" data-color="5">
+                                    <span class="color-swatch color-white"></span>白色
+                                </button>
                             </div>
 
-                            <p class="input-hint">示例：输入"11324"表示5根线，从上到下依次是：红、红、蓝、黄、黑</p>
+                            <div class="input-container">
+                                <input type="text" id="wire-input" class="wire-input" placeholder="当前线路序列："
+                                    maxlength="6" readonly>
+                                <div class="input-icon" title="点击上方颜色按钮选择线路顺序">🎯</div>
+                            </div>
+
+                            <div class="flex justify-between items-center mt-2">
+                                <p class="input-hint">点击上方颜色按钮选择线路顺序（3-6根线）</p>
+                                <button id="remove-last-wire" class="btn btn-secondary text-sm py-1 px-3">
+                                    ↩️ 删除最后一个
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Instruction Section -->
                         <div class="instruction-section">
                             <h3 class="instruction-title">拆除指示</h3>
                             <div id="cut-instruction" class="instruction-container">
-                                <p style="color: var(--text-secondary); text-align: center; font-style: italic;">请输入线路代码和序列号末位数字</p>
+                                <p style="color: var(--text-secondary); text-align: center; font-style: italic;">
+                                    请输入线路代码和序列号末位数字</p>
                             </div>
 
                             <div class="instruction-actions">
@@ -1183,7 +1440,8 @@
                             <h2 class="module-title">复杂线路模块</h2>
                             <div class="serial-input-group">
                                 <span class="serial-label">序列号末位:</span>
-                                <input type="text" id="complex-serial-last" class="serial-input" maxlength="1" placeholder="?">
+                                <input type="text" id="complex-serial-last" class="serial-input" maxlength="1"
+                                    placeholder="?">
                                 <span class="required-badge">*必填</span>
                             </div>
                         </div>
@@ -1232,7 +1490,8 @@
                         <div class="instruction-section">
                             <h3 class="instruction-title">拆除指示</h3>
                             <div id="complex-instruction" class="instruction-container">
-                                <p style="color: var(--text-secondary); text-align: center; font-style: italic;">请选择LED灯状态、线路颜色和★标记</p>
+                                <p style="color: var(--text-secondary); text-align: center; font-style: italic;">
+                                    请选择LED灯状态、线路颜色和★标记</p>
                             </div>
 
                             <div class="instruction-actions">
@@ -1297,7 +1556,8 @@
                                 <div class="input-group">
                                     <label for="letters-0" class="input-label">第1位可选字母:</label>
                                     <div class="input-container">
-                                        <input type="text" id="letters-0" class="wire-input" placeholder="输入可选字母（如：sjk）">
+                                        <input type="text" id="letters-0" class="wire-input"
+                                            placeholder="输入可选字母（如：sjk）">
                                         <div class="input-icon">
                                             <i class="fas fa-keyboard"></i>
                                         </div>
@@ -1306,7 +1566,8 @@
                                 <div class="input-group">
                                     <label for="letters-1" class="input-label">第2位可选字母:</label>
                                     <div class="input-container">
-                                        <input type="text" id="letters-1" class="wire-input" placeholder="输入可选字母（如：tpjq）">
+                                        <input type="text" id="letters-1" class="wire-input"
+                                            placeholder="输入可选字母（如：tpjq）">
                                         <div class="input-icon">
                                             <i class="fas fa-keyboard"></i>
                                         </div>
@@ -1369,55 +1630,57 @@
                 <div id="password-rules-modal" class="modal">
                     <div class="modal-content">
                         <div class="modal-header">
-                                <h3 class="modal-title">密码模块规则</h3>
-                                <button id="close-password-rules" class="modal-close">✕</button>
-                            </div>
-                            <div class="rules-content">
-                                <div class="rule-section">
-                                    <h4 class="rule-title">密码模块规则：</h4>
-                                    <ul class="rule-list">
-                                        <li class="rule-item">根据每个位置提供的可选字母，拼出正确的5字母单词</li>
-                                        <li class="rule-item">正确的单词一定在以下列表中：</li>
-                                    </ul>
-                                    <div class="word-list-container">
-                                        <div class="word-columns">
-                                            <div class="word-column">
-                                                <span>about</span><span>after</span><span>again</span><span>below</span><span>could</span>
-                                                <span>every</span><span>first</span><span>found</span><span>great</span><span>house</span>
-                                            </div>
-                                            <div class="word-column">
-                                                <span>large</span><span>learn</span><span>never</span><span>other</span><span>place</span>
-                                                <span>plant</span><span>point</span><span>right</span><span>small</span><span>sound</span>
-                                            </div>
-                                            <div class="word-column">
-                                                <span>spell</span><span>still</span><span>study</span><span>their</span><span>there</span>
-                                                <span>these</span><span>thing</span><span>think</span><span>three</span><span>water</span>
-                                            </div>
-                                            <div class="word-column">
-                                                <span>where</span><span>which</span><span>world</span><span>would</span><span>write</span>
-                                            </div>
+                            <h3 class="modal-title">密码模块规则</h3>
+                            <button id="close-password-rules" class="modal-close">✕</button>
+                        </div>
+                        <div class="rules-content">
+                            <div class="rule-section">
+                                <h4 class="rule-title">密码模块规则：</h4>
+                                <ul class="rule-list">
+                                    <li class="rule-item">根据每个位置提供的可选字母，拼出正确的5字母单词</li>
+                                    <li class="rule-item">正确的单词一定在以下列表中：</li>
+                                </ul>
+                                <div class="word-list-container">
+                                    <div class="word-columns">
+                                        <div class="word-column">
+                                            <span>about</span><span>after</span><span>again</span><span>below</span><span>could</span>
+                                            <span>every</span><span>first</span><span>found</span><span>great</span><span>house</span>
+                                        </div>
+                                        <div class="word-column">
+                                            <span>large</span><span>learn</span><span>never</span><span>other</span><span>place</span>
+                                            <span>plant</span><span>point</span><span>right</span><span>small</span><span>sound</span>
+                                        </div>
+                                        <div class="word-column">
+                                            <span>spell</span><span>still</span><span>study</span><span>their</span><span>there</span>
+                                            <span>these</span><span>thing</span><span>think</span><span>three</span><span>water</span>
+                                        </div>
+                                        <div class="word-column">
+                                            <span>where</span><span>which</span><span>world</span><span>would</span><span>write</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="rule-section">
-                                    <h4 class="rule-title">操作方法：</h4>
-                                    <ol class="rule-list">
-                                        <li class="rule-item">在每个位置的输入框中输入可选字母（不区分大小写）</li>
-                                        <li class="rule-item">使用上下按钮切换当前选中的字母</li>
-                                        <li class="rule-item">系统会实时显示可能的单词</li>
-                                        <li class="rule-item">当拼出正确的单词时，点击"提交密码"按钮</li>
-                                    </ol>
-                                </div>
+                            </div>
+                            <div class="rule-section">
+                                <h4 class="rule-title">操作方法：</h4>
+                                <ol class="rule-list">
+                                    <li class="rule-item">在每个位置的输入框中输入可选字母（不区分大小写）</li>
+                                    <li class="rule-item">使用上下按钮切换当前选中的字母</li>
+                                    <li class="rule-item">系统会实时显示可能的单词</li>
+                                    <li class="rule-item">当拼出正确的单词时，点击"提交密码"按钮</li>
+                                </ol>
                             </div>
                         </div>
+                    </div>
                 </div>
-                <!-- Memory Module -->
+
+
+                <!-- Sequence Module -->
                 <div id="module-sequence" class="module-content">
                     <div class="bomb-container">
                         <div class="module-header">
                             <h2 class="module-title">顺序线路</h2>
                         </div>
-                
+
                         <div class="sequence-buttons">
                             <button class="sequence-btn red" onclick="addSequence('red')">
                                 <i class="fas fa-circle"></i> 红色
@@ -1429,14 +1692,14 @@
                                 <i class="fas fa-circle"></i> 黑色
                             </button>
                         </div>
-                
+
                         <div class="sequence-instructions">
                             <h3>操作指引</h3>
                             <p id="sequence-instruction" class="instruction-text">
                                 请点击上方颜色按钮来记录出现的线条顺序，系统将自动高亮对应的剪断指引。
                             </p>
                         </div>
-                
+
                         <div class="instruction-actions">
                             <button id="show-sequence-rules" class="btn btn-secondary">
                                 📖 显示拆除规则
@@ -1445,12 +1708,12 @@
                                 ❌ 重置模块
                             </button>
                         </div>
-                
+
                         <div class="sequence-display">
                             <h3>当前序列</h3>
                             <div id="sequence-list" class="sequence-list"></div>
                         </div>
-                
+
                         <div class="sequence-table-container">
                             <table class="sequence-table">
                                 <thead>
@@ -1539,11 +1802,12 @@
                                 </tbody>
                             </table>
                         </div>
-                
-                
+
+
                     </div>
                 </div>
-                
+
+                <!-- Memory Module -->
                 <div id="module-memory" class="module-content">
                     <div class="bomb-container">
                         <div class="module-header">
@@ -1553,7 +1817,7 @@
                                 <span id="current-stage" class="serial-input" style="width: 2rem;">1</span>
                             </div>
                         </div>
-                
+
                         <!-- Display Section -->
                         <div class="input-section">
                             <h3 class="input-title">显示数字</h3>
@@ -1564,7 +1828,7 @@
                                 <button class="feature-btn" data-display="4">显示 4</button>
                             </div>
                         </div>
-                
+
                         <!-- Instruction Section -->
                         <div class="instruction-section">
                             <h3 class="instruction-title">操作指示</h3>
@@ -1573,7 +1837,7 @@
                                     请选择当前阶段显示的数字，然后根据规则按下正确的按钮</p>
                             </div>
                         </div>
-                
+
                         <!-- Button Panel -->
                         <div class="input-section">
                             <h3 class="input-title">按钮面板</h3>
@@ -1594,7 +1858,7 @@
                                 </div>
                             </div>
                         </div>
-                
+
                         <!-- Stage Tracking -->
                         <div class="input-section">
                             <h3 class="input-title">阶段记录</h3>
@@ -1607,52 +1871,52 @@
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">1</span>
-                                    <input type="text" class="stage-input" id="stage-1-display" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-1-button" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-1-position" placeholder="?" maxlength="1"
-                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-1-display" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-1-button" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-1-position" placeholder="?"
+                                        maxlength="1" readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">2</span>
-                                    <input type="text" class="stage-input" id="stage-2-display" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-2-button" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-2-position" placeholder="?" maxlength="1"
-                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-2-display" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-2-button" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-2-position" placeholder="?"
+                                        maxlength="1" readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">3</span>
-                                    <input type="text" class="stage-input" id="stage-3-display" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-3-button" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-3-position" placeholder="?" maxlength="1"
-                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-3-display" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-3-button" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-3-position" placeholder="?"
+                                        maxlength="1" readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">4</span>
-                                    <input type="text" class="stage-input" id="stage-4-display" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-4-button" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-4-position" placeholder="?" maxlength="1"
-                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-4-display" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-4-button" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-4-position" placeholder="?"
+                                        maxlength="1" readonly="">
                                 </div>
                                 <div class="stage-row">
                                     <span class="stage-label">5</span>
-                                    <input type="text" class="stage-input" id="stage-5-display" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-5-button" placeholder="?" maxlength="1"
-                                        readonly="">
-                                    <input type="text" class="stage-input" id="stage-5-position" placeholder="?" maxlength="1"
-                                        readonly="">
+                                    <input type="text" class="stage-input" id="stage-5-display" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-5-button" placeholder="?"
+                                        maxlength="1" readonly="">
+                                    <input type="text" class="stage-input" id="stage-5-position" placeholder="?"
+                                        maxlength="1" readonly="">
                                 </div>
                             </div>
                         </div>
-                
+
                         <!-- Actions -->
                         <div class="instruction-actions">
                             <button id="show-memory-rules" class="btn btn-secondary">
@@ -1663,7 +1927,7 @@
                             </button>
                         </div>
                     </div>
-                
+
                     <!-- Memory Rules Modal -->
                     <div id="memory-rules-modal" class="modal">
                         <div class="modal-content">
@@ -1671,7 +1935,7 @@
                                 <h3 class="modal-title">记忆模块规则</h3>
                                 <button id="close-memory-rules" class="modal-close">✕</button>
                             </div>
-                
+
                             <div class="rules-content">
                                 <div class="rule-section">
                                     <h4 class="rule-title">阶段 1：</h4>
@@ -1682,7 +1946,7 @@
                                         <li class="rule-item">如果显示的是 4，按下第四个位置的按钮。</li>
                                     </ul>
                                 </div>
-                
+
                                 <div class="rule-section">
                                     <h4 class="rule-title">阶段 2：</h4>
                                     <ul class="rule-list">
@@ -1692,7 +1956,7 @@
                                         <li class="rule-item">如果显示的是 4，按下和阶段 1 中你所按下的按钮位置相同的按钮。</li>
                                     </ul>
                                 </div>
-                
+
                                 <div class="rule-section">
                                     <h4 class="rule-title">阶段 3：</h4>
                                     <ul class="rule-list">
@@ -1702,7 +1966,7 @@
                                         <li class="rule-item">如果显示的是 4，按下数字为"4"的按钮。</li>
                                     </ul>
                                 </div>
-                
+
                                 <div class="rule-section">
                                     <h4 class="rule-title">阶段 4：</h4>
                                     <ul class="rule-list">
@@ -1712,7 +1976,7 @@
                                         <li class="rule-item">如果显示的是 4，按下和阶段 2 中你所按下的按钮位置相同的按钮。</li>
                                     </ul>
                                 </div>
-                
+
                                 <div class="rule-section">
                                     <h4 class="rule-title">阶段 5：</h4>
                                     <ul class="rule-list">
@@ -1726,22 +1990,196 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Morse Code Module -->
+                <div id="module-morse" class="module-content">
+                    <div class="bomb-container">
+                        <div class="module-header">
+                            <h2 class="module-title">摩斯密码模块</h2>
+                        </div>
+
+                        <!-- Morse Code Display -->
+                        <div class="morse-container">
+                            <div class="morse-letters">
+                                <h3 class="section-title">选择字母</h3>
+                                <div class="letters-grid">
+                                    <button class="morse-letter-btn" data-letter="A" data-code="● ━">A (● ━)</button>
+                                    <button class="morse-letter-btn" data-letter="B" data-code="━ ● ● ●">B (━ ● ●
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="C" data-code="━ ● ━ ●">C (━ ● ━
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="E" data-code="●">E (●)</button>
+                                    <button class="morse-letter-btn" data-letter="F" data-code="● ● ━ ●">F (● ● ━
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="G" data-code="━ ━ ●">G (━ ━
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="H" data-code="● ● ● ●">H (● ● ●
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="I" data-code="● ●">I (● ●)</button>
+                                    <button class="morse-letter-btn" data-letter="K" data-code="━ ● ━">K (━ ●
+                                        ━)</button>
+                                    <button class="morse-letter-btn" data-letter="L" data-code="● ━ ● ●">L (● ━ ●
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="M" data-code="━ ━">M (━ ━)</button>
+                                    <button class="morse-letter-btn" data-letter="N" data-code="━ ●">N (━ ●)</button>
+                                    <button class="morse-letter-btn" data-letter="O" data-code="━ ━ ━">O (━ ━
+                                        ━)</button>
+                                    <button class="morse-letter-btn" data-letter="R" data-code="● ━ ●">R (● ━
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="S" data-code="● ● ●">S (● ●
+                                        ●)</button>
+                                    <button class="morse-letter-btn" data-letter="T" data-code="━">T (━)</button>
+                                    <button class="morse-letter-btn" data-letter="V" data-code="● ● ● ━">V (● ● ●
+                                        ━)</button>
+                                    <button class="morse-letter-btn" data-letter="X" data-code="━ ● ● ━">X (━ ● ●
+                                        ━)</button>
+                                </div>
+                            </div>
+
+                            <div class="selected-letters">
+                                <h3 class="section-title">已选字母</h3>
+                                <div id="selected-letters-display" class="selected-display">
+                                    <span class="placeholder">请选择字母...</span>
+                                </div>
+                            </div>
+
+                            <div class="morse-results">
+                                <h3 class="section-title">匹配结果</h3>
+                                <div id="morse-results-container" class="results-container">
+                                    <span class="placeholder">选择字母后显示匹配的单词和频率</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Module Controls -->
+                        <div class="instruction-actions">
+                            <button id="show-morse-rules" class="btn btn-secondary">
+                                📖 显示拆除规则
+                            </button>
+                            <button id="reset-morse" class="btn btn-secondary">
+                                ❌ 清空输入
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Rules Modal -->
+                    <div id="morse-rules-modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">摩斯密码模块规则</h3>
+                                <button id="close-morse-rules" class="close-btn">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="rule-section">
+                                    <h4 class="rule-title">摩斯密码对照表</h4>
+                                    <div class="morse-table">
+                                        <table class="table table-dark">
+                                            <thead>
+                                                <tr>
+                                                    <th>单词</th>
+                                                    <th>频率</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>shell</td>
+                                                    <td>3.505MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>halls</td>
+                                                    <td>3.515MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>slick</td>
+                                                    <td>3.522MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>trick</td>
+                                                    <td>3.532MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>boxes</td>
+                                                    <td>3.535MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>leaks</td>
+                                                    <td>3.542MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>strobe</td>
+                                                    <td>3.545MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>bistro</td>
+                                                    <td>3.552MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>flick</td>
+                                                    <td>3.555MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>bombs</td>
+                                                    <td>3.565MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>break</td>
+                                                    <td>3.572MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>brick</td>
+                                                    <td>3.575MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>steak</td>
+                                                    <td>3.582MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>sting</td>
+                                                    <td>3.592MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>vector</td>
+                                                    <td>3.595MHz</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>beats</td>
+                                                    <td>3.600MHz</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="rule-section">
+                                    <h4 class="rule-title">操作说明</h4>
+                                    <ul class="rule-list">
+                                        <li class="rule-item">1. 点击上方字母按钮选择听到的摩斯密码字母</li>
+                                        <li class="rule-item">2. 系统会自动显示包含所有已选字母的单词</li>
+                                        <li class="rule-item">3. 根据显示的单词找到对应的频率</li>
+                                        <li class="rule-item">4. 在炸弹上输入对应的频率来解除此模块</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
+
         </div>
+    </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>拆弹专家解密助手 © 2025 | 保持冷静，你能成功拆除炸弹！</p>
-        </footer>
-    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>拆弹专家解密助手 © 2025 | 保持冷静，你能成功拆除炸弹！</p>
+    </footer>
+
 
     <script>
         // 全局变量
         const modules = {
             wires: null,
-            complexWires: null
+            complexWires: null,
+            morse: null
         };
 
         // 颜色映射表
@@ -1775,7 +2213,7 @@
         // 模块切换功能
         function setupModuleSwitching() {
             const tabs = document.querySelectorAll('[id^="tab-"]');
-            
+
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     if (tab.classList.contains('disabled')) {
@@ -1784,7 +2222,7 @@
                     }
 
                     const targetModule = tab.getAttribute('data-module');
-                    
+
                     // 更新标签状态
                     tabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
@@ -1794,7 +2232,7 @@
                     contents.forEach(content => {
                         content.classList.remove('active');
                     });
-                    
+
                     if (targetModule) {
                         document.getElementById(targetModule).classList.add('active');
                     }
@@ -1834,7 +2272,7 @@
                 </div>
             `;
             showModal('顺序线路帮助', helpContent);
-            
+
             // 显示序列表格
             const tableContainer = document.querySelector('.sequence-table-container');
             if (tableContainer) {
@@ -1847,19 +2285,19 @@
             if (modules && modules.sequence) {
                 // 重置模块数据
                 modules.sequence.reset();
-                
+
                 // 清空序列显示
                 const sequenceList = document.getElementById('sequence-list');
                 if (sequenceList) {
                     sequenceList.innerHTML = '';
                 }
-                
+
                 // 重置操作指引
                 const instruction = document.getElementById('sequence-instruction');
                 if (instruction) {
                     instruction.textContent = '请点击上方颜色按钮来记录出现的线条顺序，系统将自动高亮对应的剪断指引。';
                 }
-                
+
                 // 移除表格高亮
                 document.querySelectorAll('.sequence-table tr').forEach(row => {
                     row.classList.remove('highlight', 'highlight-red', 'highlight-blue', 'highlight-black');
@@ -1873,8 +2311,8 @@
         // 基础线路模块
         class WiresModule {
             constructor() {
-                this.currentWires = ['1', '3', '2']; // 默认3根线：红蓝黄
-                this.currentWireCount = 3;
+                this.currentWires = [];
+                this.currentWireCount = 0;
                 this.correctWireIndex = -1;
                 this.wireElements = [
                     document.getElementById('wire-1'),
@@ -1884,17 +2322,17 @@
                     document.getElementById('wire-5'),
                     document.getElementById('wire-6')
                 ];
-                
+
                 this.initialize();
             }
 
             initialize() {
-                this.initializeWires();
+                this.updateWireDisplay();
                 this.setupEventListeners();
                 this.updateCutInstruction();
             }
 
-            initializeWires() {
+            updateWireDisplay() {
                 // 显示/隐藏线路
                 this.wireElements.forEach((el, index) => {
                     if (index < this.currentWireCount) {
@@ -1908,7 +2346,7 @@
 
                 // 计算正确的线路
                 const serialLast = document.getElementById('serial-last').value;
-                if (serialLast) {
+                if (serialLast && this.currentWires.length >= 3) {
                     const result = this.getCutWire(this.currentWires.join(''), parseInt(serialLast));
                     this.correctWireIndex = result[0] - 1; // 转换为0基索引
                 } else {
@@ -1935,29 +2373,34 @@
                     }
                 });
 
-                // 线路输入
-                document.getElementById('wire-input').addEventListener('input', (e) => {
-                    // 只允许输入1-5的数字
-                    e.target.value = e.target.value.replace(/[^1-5]/g, '');
-                    this.updateWiresFromInput();
-                    this.updateCutInstruction();
+                // 颜色按钮点击事件
+                document.querySelectorAll('.wire-color-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const colorCode = btn.getAttribute('data-color');
+                        this.addWire(colorCode);
+                    });
+                });
+
+                // 删除最后一个线路按钮
+                document.getElementById('remove-last-wire').addEventListener('click', () => {
+                    this.removeLastWire();
                 });
 
                 // 线路点击事件
                 this.wireElements.forEach((el, index) => {
                     el.addEventListener('click', () => this.cutWire(index));
                 });
-                
+
                 // 清空输入按钮
                 document.getElementById('clear-input').addEventListener('click', () => {
                     this.reset();
                 });
-                
+
                 // 显示规则按钮
                 document.getElementById('show-rules').addEventListener('click', () => {
                     document.getElementById('rules-modal').style.display = 'flex';
                 });
-                
+
                 // 关闭规则按钮
                 document.getElementById('close-rules').addEventListener('click', () => {
                     document.getElementById('rules-modal').style.display = 'none';
@@ -1971,44 +2414,66 @@
                 });
             }
 
-            updateWiresFromInput() {
-                const wireInput = document.getElementById('wire-input').value;
-                if (wireInput.length >= 3 && wireInput.length <= 6) {
-                    this.currentWires = wireInput.split('');
-                    this.currentWireCount = wireInput.length;
-                    this.initializeWires();
+            addWire(colorCode) {
+                if (this.currentWires.length < 6) {
+                    this.currentWires.push(colorCode);
+                    this.currentWireCount = this.currentWires.length;
+                    this.updateWireDisplay();
+                    this.updateInputDisplay();
+                    this.updateCutInstruction();
+                } else {
+                    alert('最多只能添加6根线路');
+                }
+            }
+
+            removeLastWire() {
+                if (this.currentWires.length > 0) {
+                    this.currentWires.pop();
+                    this.currentWireCount = this.currentWires.length;
+                    this.updateWireDisplay();
+                    this.updateInputDisplay();
+                    this.updateCutInstruction();
+                }
+            }
+
+            updateInputDisplay() {
+                const wireInput = document.getElementById('wire-input');
+                if (this.currentWires.length > 0) {
+                    wireInput.value = this.currentWires.join('');
+                } else {
+                    wireInput.value = '';
                 }
             }
 
             cutWire(index) {
                 const wireElement = this.wireElements[index];
-                
+
                 // 如果线路已经被剪断，不做任何操作
                 if (wireElement.classList.contains('cut')) {
                     return;
                 }
-                
+
                 // 检查序列号是否已输入
                 const serialLast = document.getElementById('serial-last').value;
                 const wireInput = document.getElementById('wire-input').value;
-                
+
                 if (!serialLast || !wireInput || wireInput.length < 3 || wireInput.length > 6) {
                     alert('请先输入有效的线路代码和序列号末位数字');
                     return;
                 }
-                
+
                 // 计算正确的线路
                 const result = this.getCutWire(this.currentWires.join(''), parseInt(serialLast));
                 this.correctWireIndex = result[0] - 1; // 转换为0基索引
-                
+
                 // 标记线路为已剪断
                 wireElement.classList.add('cut');
-                
+
                 // 检查是否剪对了
                 if (index === this.correctWireIndex) {
                     wireElement.classList.add('correct');
                     alert('正确！线路已成功拆除');
-                    
+
                     // 重置线路
                     setTimeout(() => {
                         this.reset();
@@ -2023,7 +2488,7 @@
                 const instructionElement = document.getElementById('cut-instruction');
                 const serialLast = document.getElementById('serial-last').value;
                 const wireInput = document.getElementById('wire-input').value;
-                
+
                 if (!serialLast || !wireInput || wireInput.length < 3 || wireInput.length > 6) {
                     instructionElement.innerHTML = `
                         <div class="text-center">
@@ -2034,20 +2499,20 @@
                     `;
                     return;
                 }
-                
+
                 const wireCode = this.currentWires.join('');
                 const result = this.getCutWire(wireCode, parseInt(serialLast));
-                
+
                 if (result[0] === 0) {
                     instructionElement.innerHTML = `
                         <p class="text-danger text-center">错误: ${result[1]}</p>
                     `;
                 } else {
                     // 解析并显示线路详情
-                    const wireDetails = this.currentWires.map((c, i) => 
-                        `<span class="inline-block px-2 py-1 rounded ${colorClassMap[c]} mr-1">${i+1}(${colorMap[c]})</span>`
+                    const wireDetails = this.currentWires.map((c, i) =>
+                        `<span class="inline-block px-2 py-1 rounded ${colorClassMap[c]} mr-1">${i + 1}(${colorMap[c]})</span>`
                     );
-                    
+
                     instructionElement.innerHTML = `
                         <div>
                             <div>
@@ -2069,9 +2534,9 @@
             reset() {
                 document.getElementById('wire-input').value = '';
                 // 保留序列号末位
-                this.currentWires = ['1', '3', '2'];
-                this.currentWireCount = 3;
-                this.initializeWires();
+                this.currentWires = [];
+                this.currentWireCount = 0;
+                this.updateWireDisplay();
                 this.updateCutInstruction();
             }
 
@@ -2249,13 +2714,13 @@
                 document.querySelectorAll(`[data-${type}]`).forEach(btn => {
                     btn.classList.remove('active');
                 });
-                
+
                 // 添加当前按钮的active状态
                 button.classList.add('active');
-                
+
                 // 更新状态
                 this.state[type] = value;
-                
+
                 // 更新指示
                 this.updateInstruction();
             }
@@ -2263,7 +2728,7 @@
             updateInstruction() {
                 const instructionElement = document.getElementById('complex-instruction');
                 const serialLast = document.getElementById('complex-serial-last').value;
-                
+
                 // 检查是否有足够的信息来生成指示
                 if (!this.state.led || !this.state.color || this.state.star === null) {
                     instructionElement.innerHTML = `
@@ -2273,9 +2738,9 @@
                     `;
                     return;
                 }
-                
+
                 // 检查序列号是否已输入（如果需要）
-                if ((this.state.led === 'on' && this.state.color === 'white') || 
+                if ((this.state.led === 'on' && this.state.color === 'white') ||
                     (this.state.led === 'off' && this.state.color === 'black' && this.state.star === 'yes')) {
                     if (!serialLast) {
                         instructionElement.innerHTML = `
@@ -2286,14 +2751,14 @@
                         return;
                     }
                 }
-                
+
                 // 生成拆除指示
                 const shouldCut = this.shouldCutWire(serialLast ? parseInt(serialLast) : null);
                 const action = shouldCut ? '剪断该线' : '不要剪断该线';
                 const color = this.getColorName(this.state.color);
                 const ledStatus = this.state.led === 'on' ? '亮起' : '熄灭';
                 const starStatus = this.state.star === 'yes' ? '有' : '无';
-                
+
                 instructionElement.innerHTML = `
                     <div>
                         <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
@@ -2316,20 +2781,20 @@
 
             shouldCutWire(serialLastDigit) {
                 const { led, color, star, battery, parallel } = this.state;
-                
+
                 // 根据用户提供的新规则表进行判断
                 // 亮红灯相关规则
                 if (led === 'on' && color === 'red') {
                     // 亮红灯，不管有没有★标记，都是B类指引：电池≥2剪断
                     return battery === '2'; // '2' 表示2个或更多
                 }
-                
+
                 // 亮蓝灯相关规则
                 if (led === 'on' && color === 'blue') {
                     // 亮蓝灯，不管有没有★标记，都是P类指引：有Parallel剪断
                     return parallel === 'yes';
                 }
-                
+
                 // 亮红蓝灯相关规则
                 if (led === 'on' && color === 'red-blue') {
                     if (star === 'yes') {
@@ -2340,7 +2805,7 @@
                         return serialLastDigit !== null && serialLastDigit % 2 === 0;
                     }
                 }
-                
+
                 // 亮白灯相关规则
                 if (led === 'on' && color === 'white') {
                     if (star === 'yes') {
@@ -2351,7 +2816,7 @@
                         return false;
                     }
                 }
-                
+
                 // 灭红灯相关规则
                 if (led === 'off' && color === 'red') {
                     if (star === 'yes') {
@@ -2362,7 +2827,7 @@
                         return serialLastDigit !== null && serialLastDigit % 2 === 0;
                     }
                 }
-                
+
                 // 灭蓝灯相关规则
                 if (led === 'off' && color === 'blue') {
                     if (star === 'yes') {
@@ -2373,7 +2838,7 @@
                         return serialLastDigit !== null && serialLastDigit % 2 === 0;
                     }
                 }
-                
+
                 // 灭红蓝灯相关规则
                 if (led === 'off' && color === 'red-blue') {
                     if (star === 'yes') {
@@ -2384,13 +2849,13 @@
                         return serialLastDigit !== null && serialLastDigit % 2 === 0;
                     }
                 }
-                
+
                 // 灭白灯相关规则
                 if (led === 'off' && color === 'white') {
                     // 灭白灯，不管有没有★标记，都是C类指引：剪断
                     return true;
                 }
-                
+
                 // 默认情况，不剪断
                 return false;
             }
@@ -2414,15 +2879,15 @@
                     battery: null,
                     parallel: null
                 };
-                
+
                 // 移除所有按钮的active状态
                 document.querySelectorAll('.feature-btn').forEach(btn => {
                     btn.classList.remove('active');
                 });
-                
+
                 // 保留序列号末位，不清空
                 // document.getElementById('complex-serial-last').value = '';
-                
+
                 // 更新指示
                 this.updateInstruction();
             }
@@ -2499,32 +2964,32 @@
                 document.querySelectorAll('.position-btn').forEach(btn => {
                     btn.classList.remove('selected');
                 });
-                
+
                 // 添加当前按钮的active状态
                 button.classList.add('active');
-                
+
                 this.currentDisplay = displayNumber;
                 this.selectedNumber = null;
                 this.selectedPosition = null;
-                
+
                 // 更新操作指示
                 this.updateInstruction();
-                
+
                 // 自动选中对应的按钮
                 this.autoSelectButton();
             }
 
             autoSelectButton() {
                 if (!this.currentDisplay) return;
-                
+
                 // 获取应该按的位置和数字
                 const shouldPressPosition = this.getCorrectButtonPosition(this.currentDisplay);
                 const shouldPressNumber = this.getButtonNumberAtPosition(shouldPressPosition);
-                
+
                 // 判断当前阶段需要按位置还是数字
                 let actionType = '位置';
                 let actionValue = shouldPressPosition;
-                
+
                 // 根据阶段和规则确定操作类型
                 if (this.currentStage === 2 && this.currentDisplay === 1) {
                     actionType = '数字';
@@ -2539,13 +3004,13 @@
                 } else if (this.currentStage === 5) {
                     // 第五阶段需要按数字
                     actionType = '数字';
-                    
+
                     // 根据第五阶段规则获取应该按的数字
                     const stage1History = this.stageHistory.find(h => h.stage === 1);
                     const stage2History = this.stageHistory.find(h => h.stage === 2);
                     const stage3History = this.stageHistory.find(h => h.stage === 3);
                     const stage4History = this.stageHistory.find(h => h.stage === 4);
-                    
+
                     switch (this.currentDisplay) {
                         case 1:
                             actionValue = stage1History ? stage1History.pressedNumber : 0;
@@ -2563,7 +3028,7 @@
                             actionValue = 0;
                     }
                 }
-                
+
                 // 自动选中对应的按钮
                 if (actionType === '数字' && actionValue > 0) {
                     const numberButton = document.querySelector(`.number-btn[data-number="${actionValue}"]`);
@@ -2596,13 +3061,13 @@
                     document.querySelectorAll('.number-btn').forEach(btn => {
                         btn.classList.remove('selected');
                     });
-                    
+
                     // 添加当前按钮的选中状态
                     button.classList.add('selected');
-                    
+
                     // 更新选中的数字
                     this.selectedNumber = number;
-                    
+
                     // 检查是否已经选择了位置
                     this.checkCompleteSelection();
                 }
@@ -2624,13 +3089,13 @@
                     document.querySelectorAll('.position-btn').forEach(btn => {
                         btn.classList.remove('selected');
                     });
-                    
+
                     // 添加当前按钮的选中状态
                     button.classList.add('selected');
-                    
+
                     // 更新选中的位置
                     this.selectedPosition = position;
-                    
+
                     // 检查是否已经选择了数字
                     this.checkCompleteSelection();
                 }
@@ -2655,20 +3120,20 @@
 
                 // 更新UI
                 this.updateStageDisplay();
-                
+
                 // 获取选中的按钮并显示成功状态
                 const numberButton = document.querySelector(`.number-btn[data-number="${this.selectedNumber}"]`);
                 const positionButton = document.querySelector(`.position-btn[data-position="${this.selectedPosition}"]`);
-                
+
                 // 显示成功状态
                 if (numberButton) numberButton.classList.add('correct');
                 if (positionButton) positionButton.classList.add('correct');
-                
+
                 setTimeout(() => {
                     if (numberButton) numberButton.classList.remove('correct', 'selected');
                     if (positionButton) positionButton.classList.remove('correct', 'selected');
                 }, 1000);
-                
+
                 // 进入下一阶段或完成
                 setTimeout(() => {
                     if (this.currentStage < 5) {
@@ -2677,7 +3142,7 @@
                         this.complete();
                     }
                 }, 1000);
-                
+
                 // 重置选择状态
                 this.selectedNumber = null;
                 this.selectedPosition = null;
@@ -2713,7 +3178,7 @@
             getStage2Position(displayNumber) {
                 const stage1History = this.stageHistory.find(h => h.stage === 1);
                 const stage1Position = stage1History ? stage1History.pressedPosition : 0;
-                
+
                 switch (displayNumber) {
                     case 1: return this.getPositionByNumber(4);
                     case 2: return stage1Position;
@@ -2728,7 +3193,7 @@
                 const stage2History = this.stageHistory.find(h => h.stage === 2);
                 const stage1Number = stage1History ? stage1History.pressedNumber : 0;
                 const stage2Number = stage2History ? stage2History.pressedNumber : 0;
-                
+
                 switch (displayNumber) {
                     case 1: return this.getPositionByNumber(stage2Number);
                     case 2: return this.getPositionByNumber(stage1Number);
@@ -2743,7 +3208,7 @@
                 const stage2History = this.stageHistory.find(h => h.stage === 2);
                 const stage1Position = stage1History ? stage1History.pressedPosition : 0;
                 const stage2Position = stage2History ? stage2History.pressedPosition : 0;
-                
+
                 switch (displayNumber) {
                     case 1: return stage1Position;
                     case 2: return 1;
@@ -2762,7 +3227,7 @@
                 const stage2Number = stage2History ? stage2History.pressedNumber : 0;
                 const stage3Number = stage3History ? stage3History.pressedNumber : 0;
                 const stage4Number = stage4History ? stage4History.pressedNumber : 0;
-                
+
                 switch (displayNumber) {
                     case 1: return this.getPositionByNumber(stage1Number);
                     case 2: return this.getPositionByNumber(stage2Number);
@@ -2775,16 +3240,16 @@
             getPositionByNumber(targetNumber) {
                 // 按钮布局：位置1-4，每行4个按钮
                 const buttonLayout = [
-                    {position: 1, number: 1},
-                    {position: 2, number: 2},
-                    {position: 3, number: 3},
-                    {position: 4, number: 4},
-                    {position: 1, number: 2},
-                    {position: 2, number: 1},
-                    {position: 3, number: 4},
-                    {position: 4, number: 3}
+                    { position: 1, number: 1 },
+                    { position: 2, number: 2 },
+                    { position: 3, number: 3 },
+                    { position: 4, number: 4 },
+                    { position: 1, number: 2 },
+                    { position: 2, number: 1 },
+                    { position: 3, number: 4 },
+                    { position: 4, number: 3 }
                 ];
-                
+
                 const button = buttonLayout.find(b => b.number === targetNumber);
                 return button ? button.position : 0;
             }
@@ -2792,12 +3257,12 @@
             nextStage() {
                 this.currentStage++;
                 this.currentDisplay = null;
-                
+
                 // 清除显示数字按钮的active状态
                 document.querySelectorAll('[data-display]').forEach(btn => {
                     btn.classList.remove('active');
                 });
-                
+
                 this.updateStageIndicator();
                 this.updateInstruction();
             }
@@ -2808,16 +3273,16 @@
                 this.selectedNumber = null;
                 this.selectedPosition = null;
                 this.stageHistory = [];
-                
+
                 // 完全重置所有按钮样式
                 document.querySelectorAll('[data-display]').forEach(btn => {
                     btn.className = 'feature-btn';
                 });
-                
+
                 document.querySelectorAll('.memory-btn').forEach(btn => {
                     btn.className = btn.classList.contains('number-btn') ? 'memory-btn number-btn' : 'memory-btn position-btn';
                 });
-                
+
                 // 清空阶段记录
                 for (let i = 1; i <= 5; i++) {
                     const displayInput = document.getElementById(`stage-${i}-display`);
@@ -2827,7 +3292,7 @@
                     if (buttonInput) buttonInput.value = '';
                     if (positionInput) positionInput.value = '';
                 }
-                
+
                 this.updateStageIndicator();
                 this.updateInstruction();
             }
@@ -2847,7 +3312,7 @@
 
             updateInstruction() {
                 const instructionElement = document.getElementById('memory-instruction');
-                
+
                 if (!this.currentDisplay) {
                     instructionElement.innerHTML = `
                         <div class="text-center">
@@ -2857,15 +3322,15 @@
                     `;
                     return;
                 }
-                
+
                 // 根据当前阶段和显示数字生成指示
                 const shouldPressPosition = this.getCorrectButtonPosition(this.currentDisplay);
                 const shouldPressNumber = this.getButtonNumberAtPosition(shouldPressPosition);
-                
+
                 // 判断当前阶段需要按位置还是数字
                 let actionType = '位置';
                 let actionValue = shouldPressPosition;
-                
+
                 // 根据阶段和规则确定操作类型
                 if (this.currentStage === 2 && this.currentDisplay === 1) {
                     actionType = '数字';
@@ -2880,13 +3345,13 @@
                 } else if (this.currentStage === 5) {
                     // 第五阶段需要按数字
                     actionType = '数字';
-                    
+
                     // 根据第五阶段规则获取应该按的数字
                     const stage1History = this.stageHistory.find(h => h.stage === 1);
                     const stage2History = this.stageHistory.find(h => h.stage === 2);
                     const stage3History = this.stageHistory.find(h => h.stage === 3);
                     const stage4History = this.stageHistory.find(h => h.stage === 4);
-                    
+
                     switch (this.currentDisplay) {
                         case 1:
                             actionValue = stage1History ? stage1History.pressedNumber : 0;
@@ -2904,7 +3369,7 @@
                             actionValue = 0;
                     }
                 }
-                
+
                 instructionElement.innerHTML = `
                     <div>
                         <div style="background-color: #0f172a; padding: 1rem; border-radius: 8px;">
@@ -2927,7 +3392,7 @@
                     3: [3, 4], // 位置3有两个按钮：数字3和4
                     4: [4, 3]  // 位置4有两个按钮：数字4和3
                 };
-                
+
                 // 根据当前阶段选择正确的数字
                 // 这里简化处理，返回第一个匹配的数字
                 return positionToNumberMap[position] ? positionToNumberMap[position][0] : 0;
@@ -2944,7 +3409,7 @@
                         <p class="text-sm mt-2">所有5个阶段都已完成</p>
                     </div>
                 `;
-                
+
                 // 禁用所有按钮
                 document.querySelectorAll('[data-display], .memory-btn').forEach(btn => {
                     btn.disabled = true;
@@ -2956,20 +3421,20 @@
                 this.currentStage = 1;
                 this.currentDisplay = null;
                 this.stageHistory = [];
-                
+
                 // 清除所有状态
                 document.querySelectorAll('[data-display], .memory-btn').forEach(btn => {
                     btn.classList.remove('active', 'correct', 'incorrect', 'opacity-50', 'cursor-not-allowed');
                     btn.disabled = false;
                 });
-                
+
                 // 清空阶段记录
                 for (let i = 1; i <= 5; i++) {
                     document.getElementById(`stage-${i}-display`).value = '';
                     document.getElementById(`stage-${i}-button`).value = '';
                     document.getElementById(`stage-${i}-position`).value = '';
                 }
-                
+
                 this.updateStageIndicator();
                 this.updateInstruction();
             }
@@ -3004,7 +3469,7 @@
             updateSequenceDisplay() {
                 const sequenceList = document.getElementById('sequence-list');
                 sequenceList.innerHTML = '';
-                
+
                 this.sequence.forEach((color, index) => {
                     const item = document.createElement('div');
                     item.className = `sequence-item ${color}`;
@@ -3024,7 +3489,7 @@
 
                 // 添加新的高亮
                 const rows = document.querySelectorAll('.sequence-table tbody tr');
-                
+
                 // 高亮红色对应的行
                 if (this.counts.red > 0 && this.counts.red <= 9) {
                     const row = rows[this.counts.red - 1];
@@ -3160,7 +3625,7 @@
                     if (possibleWords.length === 0) {
                         wordsList.innerHTML = '<span class="text-danger">没有找到匹配的单词</span>';
                     } else {
-                        wordsList.innerHTML = possibleWords.map(word => 
+                        wordsList.innerHTML = possibleWords.map(word =>
                             `<span class="word-item">${word}</span>`
                         ).join('');
                     }
@@ -3188,13 +3653,13 @@
                         input.value = '';
                     }
                 }
-                
+
                 // 重置提示信息
                 const hint = document.getElementById('password-hint');
                 if (hint) {
                     hint.innerHTML = '请输入每个位置的可选字母，系统会自动显示可能的单词';
                 }
-                
+
                 // 重置单词列表
                 this.updatePossibleWords();
             }
@@ -3228,19 +3693,158 @@
             });
         }
 
+        class MorseCodeModule {
+            constructor() {
+                this.selectedLetters = [];
+                this.wordFrequencyMap = {
+                    'shell': '3.505MHz',
+                    'halls': '3.515MHz',
+                    'slick': '3.522MHz',
+                    'trick': '3.532MHz',
+                    'boxes': '3.535MHz',
+                    'leaks': '3.542MHz',
+                    'strobe': '3.545MHz',
+                    'bistro': '3.552MHz',
+                    'flick': '3.555MHz',
+                    'bombs': '3.565MHz',
+                    'break': '3.572MHz',
+                    'brick': '3.575MHz',
+                    'steak': '3.582MHz',
+                    'sting': '3.592MHz',
+                    'vector': '3.595MHz',
+                    'beats': '3.600MHz'
+                };
+                this.initialize();
+            }
 
+            initialize() {
+                this.setupEventListeners();
+                this.updateDisplay();
+            }
+
+            setupEventListeners() {
+                // 字母按钮事件
+                document.querySelectorAll('.morse-letter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.toggleLetter(btn);
+                    });
+                });
+
+                // 显示规则按钮
+                document.getElementById('show-morse-rules').addEventListener('click', () => {
+                    document.getElementById('morse-rules-modal').style.display = 'flex';
+                });
+
+                // 关闭规则按钮
+                document.getElementById('close-morse-rules').addEventListener('click', () => {
+                    document.getElementById('morse-rules-modal').style.display = 'none';
+                });
+
+                // 点击模态框背景关闭
+                document.getElementById('morse-rules-modal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('morse-rules-modal')) {
+                        document.getElementById('morse-rules-modal').style.display = 'none';
+                    }
+                });
+
+                // 重置按钮
+                document.getElementById('reset-morse').addEventListener('click', () => {
+                    this.reset();
+                });
+            }
+
+            toggleLetter(button) {
+                const letter = button.getAttribute('data-letter');
+                const index = this.selectedLetters.indexOf(letter);
+
+                if (index > -1) {
+                    // 取消选择
+                    this.selectedLetters.splice(index, 1);
+                    button.classList.remove('selected');
+                } else {
+                    // 选择字母
+                    this.selectedLetters.push(letter);
+                    button.classList.add('selected');
+                }
+
+                this.updateDisplay();
+            }
+
+            updateDisplay() {
+                this.updateSelectedLettersDisplay();
+                this.updateResultsDisplay();
+            }
+
+            updateSelectedLettersDisplay() {
+                const display = document.getElementById('selected-letters-display');
+
+                if (this.selectedLetters.length === 0) {
+                    display.innerHTML = '<span class="placeholder">请选择字母...</span>';
+                } else {
+                    display.textContent = this.selectedLetters.join(' ');
+                }
+            }
+
+            updateResultsDisplay() {
+                const container = document.getElementById('morse-results-container');
+
+                if (this.selectedLetters.length === 0) {
+                    container.innerHTML = '<span class="placeholder">选择字母后显示匹配的单词和频率</span>';
+                    return;
+                }
+
+                // 查找包含所有选中字母的单词
+                const matchingWords = this.findMatchingWords();
+
+                if (matchingWords.length === 0) {
+                    container.innerHTML = '<span class="placeholder">没有找到包含所有选中字母的单词</span>';
+                } else {
+                    const resultsHTML = matchingWords.map(word => `
+                        <div class="result-item">
+                            <span class="result-word">${word}</span>
+                            <span class="result-frequency">${this.wordFrequencyMap[word]}</span>
+                        </div>
+                    `).join('');
+                    container.innerHTML = resultsHTML;
+                }
+            }
+
+            findMatchingWords() {
+                return Object.keys(this.wordFrequencyMap).filter(word => {
+                    // 检查单词是否包含所有选中的字母（不区分大小写）
+                    const wordLower = word.toLowerCase();
+                    return this.selectedLetters.every(letter =>
+                        wordLower.includes(letter.toLowerCase())
+                    );
+                });
+            }
+
+            reset() {
+                // 清空选中的字母
+                this.selectedLetters = [];
+
+                // 重置按钮状态
+                document.querySelectorAll('.morse-letter-btn').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+
+                // 更新显示
+                this.updateDisplay();
+            }
+        }
 
         // 初始化应用
         document.addEventListener('DOMContentLoaded', () => {
             setupModuleSwitching();
-            
+
             // 初始化各个模块
             modules.wires = new WiresModule();
             modules.complexWires = new ComplexWiresModule();
             modules.sequence = new SequenceModule();
             modules.memory = new MemoryModule();
             modules.password = new PasswordModule();
-            
+            modules.morse = new MorseCodeModule();
+
             // 绑定顺序线路模块按钮事件
             document.getElementById('show-sequence-rules').addEventListener('click', () => {
                 document.getElementById('sequence-rules-modal').style.display = 'flex';
@@ -3249,4 +3853,6 @@
         });
     </script>
 
-</body></html>
+</body>
+
+</html>
