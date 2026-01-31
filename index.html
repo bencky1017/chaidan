@@ -249,6 +249,41 @@
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
+        .serial-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #0f172a;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 60px;
+        }
+
+        .serial-btn:hover {
+            border-color: var(--secondary-color);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .serial-btn.active {
+            border-color: var(--secondary-color);
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--secondary-color);
+        }
+
+        .serial-btn.active.odd {
+            border-color: var(--success-color);
+            background-color: rgba(34, 197, 94, 0.2);
+            color: var(--success-color);
+        }
+
+        .serial-btn.active.even {
+            border-color: var(--warning-color);
+            background-color: rgba(234, 179, 8, 0.2);
+            color: var(--warning-color);
+        }
+
         .required-badge {
             font-size: 0.75rem;
             color: var(--warning-color);
@@ -276,7 +311,8 @@
             gap: 0.75rem;
         }
 
-        .morse-letter-btn {
+        .morse-letter-btn,
+        .password-letter-btn {
             background-color: var(--dark-color);
             border: 2px solid var(--border-color);
             color: var(--text-color);
@@ -287,18 +323,80 @@
             font-weight: 500;
         }
 
-        .morse-letter-btn:hover {
+        .morse-letter-btn:hover,
+        .password-letter-btn:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
 
-        .morse-letter-btn.selected {
+        .morse-letter-btn.selected,
+        .password-letter-btn.selected {
             background-color: var(--success-color);
             border-color: var(--success-color);
             color: white;
             box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .password-letter-btn {
+            min-width: 2rem;
+            height: 2rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem;
+        }
+
+        .password-letter-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background-color: var(--dark-color);
+            border-color: var(--border-color);
+        }
+
+        .password-letter-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .password-letter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .password-position {
+            margin-bottom: 1.5rem;
+        }
+
+        .password-position-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-position-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        .password-position-selected {
+            font-size: 0.875rem;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .password-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .selected-display {
@@ -340,6 +438,46 @@
         .result-item:hover {
             background-color: var(--secondary-color);
             transform: translateX(5px);
+        }
+
+        .complex-wires-new-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .result-section {
+            background-color: #0f172a;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-title {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .result-content {
+            min-height: 100px;
+        }
+
+        .wires-combinations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .wire-combination {
+            background-color: var(--success-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
         .result-word {
@@ -1263,6 +1401,13 @@
                                 </button>
                             </li>
                             <li class="nav-item">
+                                <button id="tab-complex-wires-new" class="module-tab"
+                                    data-module="module-complex-wires-new">
+                                    <span>⚡ 复杂线路(新)</span>
+                                    <span class="difficulty-badge difficulty-hard">困难</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
                                 <button id="tab-password" class="module-tab" data-module="module-password">
                                     <span>⌨️ 密码模块</span>
                                     <span class="difficulty-badge difficulty-hard">困难</span>
@@ -1300,7 +1445,10 @@
                             <h2 class="module-title">线路模块</h2>
                             <div class="serial-input-group">
                                 <span class="serial-label">序列号末位:</span>
-                                <input type="text" id="serial-last" class="serial-input" maxlength="1" placeholder="?">
+                                <div class="button-group">
+                                    <button id="serial-odd" class="serial-btn" data-type="odd">奇数</button>
+                                    <button id="serial-even" class="serial-btn" data-type="even">偶数</button>
+                                </div>
                                 <span class="required-badge">*必填</span>
                             </div>
                         </div>
@@ -1440,8 +1588,10 @@
                             <h2 class="module-title">复杂线路模块</h2>
                             <div class="serial-input-group">
                                 <span class="serial-label">序列号末位:</span>
-                                <input type="text" id="complex-serial-last" class="serial-input" maxlength="1"
-                                    placeholder="?">
+                                <div class="button-group">
+                                    <button id="complex-serial-odd" class="serial-btn" data-type="odd">奇数</button>
+                                    <button id="complex-serial-even" class="serial-btn" data-type="even">偶数</button>
+                                </div>
                                 <span class="required-badge">*必填</span>
                             </div>
                         </div>
@@ -1538,6 +1688,144 @@
                     </div>
                 </div>
 
+                <!-- Complex Wires Module (New) -->
+                <div id="module-complex-wires-new" class="module-content">
+                    <div class="bomb-container">
+                        <div class="module-header">
+                            <h2 class="module-title">复杂线路模块(新)</h2>
+                            <div class="serial-input-group">
+                                <span class="serial-label">序列号末位:</span>
+                                <div class="button-group">
+                                    <button id="complex-new-serial-odd" class="serial-btn" data-type="odd">奇数</button>
+                                    <button id="complex-new-serial-even" class="serial-btn" data-type="even">偶数</button>
+                                </div>
+                                <span class="required-badge">*必填</span>
+                            </div>
+                        </div>
+
+                        <div class="complex-wires-new-container">
+                            <!-- 电池数量选择 -->
+                            <div class="input-section">
+                                <div class="input-header">
+                                    <h3 class="input-title">电池数量</h3>
+                                </div>
+                                <div class="button-group">
+                                    <button id="battery-gte-2" class="feature-btn" data-battery="gte-2">≥ 2块</button>
+                                    <button id="battery-lt-2" class="feature-btn" data-battery="lt-2">＜ 2块</button>
+                                </div>
+                            </div>
+
+                            <!-- 端口情况选择 -->
+                            <div class="input-section">
+                                <div class="input-header">
+                                    <h3 class="input-title">端口情况</h3>
+                                </div>
+                                <div class="button-group">
+                                    <button id="port-has-parallel" class="feature-btn"
+                                        data-port="has-parallel">有Parallel端口</button>
+                                    <button id="port-no-parallel" class="feature-btn"
+                                        data-port="no-parallel">无Parallel端口</button>
+                                </div>
+                            </div>
+
+                            <!-- 结果显示区域 -->
+                            <div id="complex-new-result" class="result-section">
+                                <h3 class="result-title">需要剪断的线路组合：</h3>
+                                <div class="result-content">
+                                    <p class="placeholder">请选择序列号末位、电池数量和端口情况</p>
+                                </div>
+                            </div>
+
+                            <!-- 操作按钮 -->
+                            <div class="instruction-actions">
+                                <button id="show-complex-new-rules" class="btn btn-secondary">
+                                    📖 显示规则
+                                </button>
+                                <button id="reset-complex-new" class="btn btn-secondary">
+                                    ❌ 重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complex Wires New Rules Modal -->
+                <div id="complex-new-rules-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">复杂线路模块(新)规则</h3>
+                            <button id="close-complex-new-rules" class="modal-close">✕</button>
+                        </div>
+                        <div class="rules-content">
+                            <div class="rule-section">
+                                <h4 class="rule-title">剪断规则表：</h4>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>序列末位</th>
+                                                <th>电池数量</th>
+                                                <th>端口情况</th>
+                                                <th>需剪断的线路组合</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>偶数</td>
+                                                <td>≥2</td>
+                                                <td>有</td>
+                                                <td>亮红★、亮红无★、亮蓝★、亮蓝无★、亮红蓝无★、灭红★、灭红蓝★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>偶数</td>
+                                                <td>≥2</td>
+                                                <td>无</td>
+                                                <td>亮红★、亮红无★、亮红蓝无★、灭红★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>偶数</td>
+                                                <td>＜2</td>
+                                                <td>有</td>
+                                                <td>亮蓝★、亮蓝无★、亮红蓝无★、灭红★、灭红蓝★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>偶数</td>
+                                                <td>＜2</td>
+                                                <td>无</td>
+                                                <td>亮红蓝无★、灭红★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>奇数</td>
+                                                <td>≥2</td>
+                                                <td>有</td>
+                                                <td>亮红★、亮红无★、亮蓝★、亮蓝无★、灭红★、灭红蓝★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>奇数</td>
+                                                <td>≥2</td>
+                                                <td>无</td>
+                                                <td>亮红★、亮红无★、灭红★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>奇数</td>
+                                                <td>＜2</td>
+                                                <td>有</td>
+                                                <td>亮蓝★、亮蓝无★、灭红★、灭红蓝★、灭白★、灭白无★</td>
+                                            </tr>
+                                            <tr>
+                                                <td>奇数</td>
+                                                <td>＜2</td>
+                                                <td>无</td>
+                                                <td>灭红★、灭白★、灭白无★</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Password Module -->
                 <div id="module-password" class="module-content">
                     <div class="bomb-container">
@@ -1551,53 +1839,60 @@
                         <div class="password-container">
 
 
-                            <!-- 可选字母输入框 -->
-                            <div class="available-letters">
-                                <div class="input-group">
-                                    <label for="letters-0" class="input-label">第1位可选字母:</label>
-                                    <div class="input-container">
-                                        <input type="text" id="letters-0" class="wire-input"
-                                            placeholder="输入可选字母（如：sjk）">
-                                        <div class="input-icon">
-                                            <i class="fas fa-keyboard"></i>
-                                        </div>
+                            <!-- 字母选择区域 -->
+                            <div class="password-selection">
+                                <!-- 第1位字母选择 -->
+                                <div class="password-position">
+                                    <div class="password-position-header">
+                                        <h4 class="password-position-title">第1位字母</h4>
+                                        <span class="password-position-selected" id="position-0-selected">未选择</span>
+                                    </div>
+                                    <div class="password-input-group">
+                                        <div class="password-letter-grid" id="position-0-grid"></div>
                                     </div>
                                 </div>
-                                <div class="input-group">
-                                    <label for="letters-1" class="input-label">第2位可选字母:</label>
-                                    <div class="input-container">
-                                        <input type="text" id="letters-1" class="wire-input"
-                                            placeholder="输入可选字母（如：tpjq）">
-                                        <div class="input-icon">
-                                            <i class="fas fa-keyboard"></i>
-                                        </div>
+
+                                <!-- 第2位字母选择 -->
+                                <div class="password-position">
+                                    <div class="password-position-header">
+                                        <h4 class="password-position-title">第2位字母</h4>
+                                        <span class="password-position-selected" id="position-1-selected">未选择</span>
+                                    </div>
+                                    <div class="password-input-group">
+                                        <div class="password-letter-grid" id="position-1-grid"></div>
                                     </div>
                                 </div>
-                                <div class="input-group">
-                                    <label for="letters-2" class="input-label">第3位可选字母:</label>
-                                    <div class="input-container">
-                                        <input type="text" id="letters-2" class="wire-input" placeholder="输入可选字母">
-                                        <div class="input-icon">
-                                            <i class="fas fa-keyboard"></i>
-                                        </div>
+
+                                <!-- 第3位字母选择 -->
+                                <div class="password-position">
+                                    <div class="password-position-header">
+                                        <h4 class="password-position-title">第3位字母</h4>
+                                        <span class="password-position-selected" id="position-2-selected">未选择</span>
+                                    </div>
+                                    <div class="password-input-group">
+                                        <div class="password-letter-grid" id="position-2-grid"></div>
                                     </div>
                                 </div>
-                                <div class="input-group">
-                                    <label for="letters-3" class="input-label">第4位可选字母:</label>
-                                    <div class="input-container">
-                                        <input type="text" id="letters-3" class="wire-input" placeholder="输入可选字母">
-                                        <div class="input-icon">
-                                            <i class="fas fa-keyboard"></i>
-                                        </div>
+
+                                <!-- 第4位字母选择 -->
+                                <div class="password-position">
+                                    <div class="password-position-header">
+                                        <h4 class="password-position-title">第4位字母</h4>
+                                        <span class="password-position-selected" id="position-3-selected">未选择</span>
+                                    </div>
+                                    <div class="password-input-group">
+                                        <div class="password-letter-grid" id="position-3-grid"></div>
                                     </div>
                                 </div>
-                                <div class="input-group">
-                                    <label for="letters-4" class="input-label">第5位可选字母:</label>
-                                    <div class="input-container">
-                                        <input type="text" id="letters-4" class="wire-input" placeholder="输入可选字母">
-                                        <div class="input-icon">
-                                            <i class="fas fa-keyboard"></i>
-                                        </div>
+
+                                <!-- 第5位字母选择 -->
+                                <div class="password-position">
+                                    <div class="password-position-header">
+                                        <h4 class="password-position-title">第5位字母</h4>
+                                        <span class="password-position-selected" id="position-4-selected">未选择</span>
+                                    </div>
+                                    <div class="password-input-group">
+                                        <div class="password-letter-grid" id="position-4-grid"></div>
                                     </div>
                                 </div>
                             </div>
@@ -2345,9 +2640,10 @@
                 });
 
                 // 计算正确的线路
-                const serialLast = document.getElementById('serial-last').value;
-                if (serialLast && this.currentWires.length >= 3) {
-                    const result = this.getCutWire(this.currentWires.join(''), parseInt(serialLast));
+                const serialType = this.getSerialType();
+                if (serialType && this.currentWires.length >= 3) {
+                    const serialDigit = this.getSerialLastDigit();
+                    const result = this.getCutWire(this.currentWires.join(''), serialDigit);
                     this.correctWireIndex = result[0] - 1; // 转换为0基索引
                 } else {
                     this.correctWireIndex = -1;
@@ -2364,13 +2660,13 @@
             }
 
             setupEventListeners() {
-                // 序列号输入
-                document.getElementById('serial-last').addEventListener('input', (e) => {
-                    // 只允许输入数字
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-                    if (e.target.value) {
-                        this.updateCutInstruction();
-                    }
+                // 序列号奇偶选择
+                document.getElementById('serial-odd').addEventListener('click', () => {
+                    this.setSerialType('odd');
+                });
+
+                document.getElementById('serial-even').addEventListener('click', () => {
+                    this.setSerialType('even');
                 });
 
                 // 颜色按钮点击事件
@@ -2486,22 +2782,23 @@
 
             updateCutInstruction() {
                 const instructionElement = document.getElementById('cut-instruction');
-                const serialLast = document.getElementById('serial-last').value;
+                const serialType = this.getSerialType();
                 const wireInput = document.getElementById('wire-input').value;
 
-                if (!serialLast || !wireInput || wireInput.length < 3 || wireInput.length > 6) {
+                if (!serialType || !wireInput || wireInput.length < 3 || wireInput.length > 6) {
                     instructionElement.innerHTML = `
                         <div class="text-center">
-                            <p class="text-gray-400 italic">请输入有效的线路代码（3-6位数字）和序列号末位数字</p>
-                            ${!serialLast ? '<p class="text-warning text-sm mt-2"><i class="fa fa-exclamation-circle"></i> 请输入序列号末位数字</p>' : ''}
-                            ${wireInput && (wireInput.length < 3 || wireInput.length > 6) ? '<p class="text-warning text-sm mt-2"><i class="fa fa-exclamation-circle"></i> 线路代码必须是3-6位数字</p>' : ''}
+                            <p class="text-gray-400 italic">请选择序列号末位奇偶性并输入有效的线路代码（3-6位）</p>
+                            ${!serialType ? '<p class="text-warning text-sm mt-2"><i class="fa fa-exclamation-circle"></i> 请选择序列号末位奇偶性</p>' : ''}
+                            ${wireInput && (wireInput.length < 3 || wireInput.length > 6) ? '<p class="text-warning text-sm mt-2"><i class="fa fa-exclamation-circle"></i> 线路代码必须是3-6位</p>' : ''}
                         </div>
                     `;
                     return;
                 }
 
                 const wireCode = this.currentWires.join('');
-                const result = this.getCutWire(wireCode, parseInt(serialLast));
+                const serialDigit = this.getSerialLastDigit();
+                const result = this.getCutWire(wireCode, serialDigit);
 
                 if (result[0] === 0) {
                     instructionElement.innerHTML = `
@@ -2533,11 +2830,44 @@
 
             reset() {
                 document.getElementById('wire-input').value = '';
-                // 保留序列号末位
+                // 重置序列号选择
+                document.querySelectorAll('#serial-odd, #serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
                 this.currentWires = [];
                 this.currentWireCount = 0;
                 this.updateWireDisplay();
                 this.updateCutInstruction();
+            }
+
+            setSerialType(type) {
+                // 移除所有按钮的active状态
+                document.querySelectorAll('#serial-odd, #serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
+
+                // 添加当前按钮的active状态
+                const activeBtn = document.getElementById(type === 'odd' ? 'serial-odd' : 'serial-even');
+                activeBtn.classList.add('active', type);
+
+                this.updateCutInstruction();
+            }
+
+            getSerialType() {
+                const oddBtn = document.getElementById('serial-odd');
+                const evenBtn = document.getElementById('serial-even');
+
+                if (oddBtn.classList.contains('active')) {
+                    return 'odd';
+                } else if (evenBtn.classList.contains('active')) {
+                    return 'even';
+                }
+                return null;
+            }
+
+            getSerialLastDigit() {
+                const type = this.getSerialType();
+                return type === 'odd' ? 1 : (type === 'even' ? 0 : null);
             }
 
             getCutWire(wireCode, serialLastDigit) {
@@ -2626,6 +2956,179 @@
             }
         }
 
+        // 复杂线路模块(新)
+        class ComplexWiresNewModule {
+            constructor() {
+                this.state = {
+                    serialType: null,
+                    battery: null,
+                    port: null
+                };
+                this.cutRules = {
+                    'even_gte-2_has-parallel': [
+                        '亮红★', '亮红无★', '亮蓝★', '亮蓝无★', '亮红蓝无★',
+                        '灭红★', '灭红蓝★', '灭白★', '灭白无★'
+                    ],
+                    'even_gte-2_no-parallel': [
+                        '亮红★', '亮红无★', '亮红蓝无★', '灭红★', '灭白★', '灭白无★'
+                    ],
+                    'even_lt-2_has-parallel': [
+                        '亮蓝★', '亮蓝无★', '亮红蓝无★', '灭红★', '灭红蓝★', '灭白★', '灭白无★'
+                    ],
+                    'even_lt-2_no-parallel': [
+                        '亮红蓝无★', '灭红★', '灭白★', '灭白无★'
+                    ],
+                    'odd_gte-2_has-parallel': [
+                        '亮红★', '亮红无★', '亮蓝★', '亮蓝无★', '灭红★', '灭红蓝★', '灭白★', '灭白无★'
+                    ],
+                    'odd_gte-2_no-parallel': [
+                        '亮红★', '亮红无★', '灭红★', '灭白★', '灭白无★'
+                    ],
+                    'odd_lt-2_has-parallel': [
+                        '亮蓝★', '亮蓝无★', '灭红★', '灭红蓝★', '灭白★', '灭白无★'
+                    ],
+                    'odd_lt-2_no-parallel': [
+                        '灭红★', '灭白★', '灭白无★'
+                    ]
+                };
+                this.initialize();
+            }
+
+            initialize() {
+                this.setupEventListeners();
+                this.updateResult();
+            }
+
+            setupEventListeners() {
+                // 序列号奇偶选择
+                document.getElementById('complex-new-serial-odd').addEventListener('click', () => {
+                    this.setSerialType('odd');
+                });
+
+                document.getElementById('complex-new-serial-even').addEventListener('click', () => {
+                    this.setSerialType('even');
+                });
+
+                // 电池数量选择
+                document.querySelectorAll('[data-battery]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.updateSelection('battery', btn.getAttribute('data-battery'), btn);
+                    });
+                });
+
+                // 端口情况选择
+                document.querySelectorAll('[data-port]').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.updateSelection('port', btn.getAttribute('data-port'), btn);
+                    });
+                });
+
+                // 重置按钮
+                document.getElementById('reset-complex-new').addEventListener('click', () => {
+                    this.reset();
+                });
+
+                // 显示规则按钮
+                document.getElementById('show-complex-new-rules').addEventListener('click', () => {
+                    document.getElementById('complex-new-rules-modal').style.display = 'flex';
+                });
+
+                // 关闭规则按钮
+                document.getElementById('close-complex-new-rules').addEventListener('click', () => {
+                    document.getElementById('complex-new-rules-modal').style.display = 'none';
+                });
+
+                // 点击模态框背景关闭
+                document.getElementById('complex-new-rules-modal').addEventListener('click', (e) => {
+                    if (e.target === document.getElementById('complex-new-rules-modal')) {
+                        document.getElementById('complex-new-rules-modal').style.display = 'none';
+                    }
+                });
+            }
+
+            setSerialType(type) {
+                // 移除所有按钮的active状态
+                document.querySelectorAll('#complex-new-serial-odd, #complex-new-serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
+
+                // 添加当前按钮的active状态
+                const activeBtn = document.getElementById(type === 'odd' ? 'complex-new-serial-odd' : 'complex-new-serial-even');
+                activeBtn.classList.add('active', type);
+
+                this.state.serialType = type;
+                this.updateResult();
+            }
+
+            updateSelection(type, value, button) {
+                // 移除同组其他按钮的active状态
+                document.querySelectorAll(`[data-${type}]`).forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // 添加当前按钮的active状态
+                button.classList.add('active');
+
+                // 更新状态
+                this.state[type] = value;
+
+                // 更新结果
+                this.updateResult();
+            }
+
+            updateResult() {
+                const resultElement = document.getElementById('complex-new-result').querySelector('.result-content');
+
+                // 检查是否所有必要信息都已提供
+                if (!this.state.serialType || !this.state.battery || !this.state.port) {
+                    resultElement.innerHTML = '<p class="placeholder">请选择序列号末位、电池数量和端口情况</p>';
+                    return;
+                }
+
+                // 生成规则键
+                const ruleKey = `${this.state.serialType}_${this.state.battery}_${this.state.port}`;
+                const wiresToCut = this.cutRules[ruleKey] || [];
+
+                if (wiresToCut.length > 0) {
+                    resultElement.innerHTML = `
+                        <div class="wires-combinations">
+                            ${wiresToCut.map(wire => `<span class="wire-combination">${wire}</span>`).join('')}
+                        </div>
+                        <p class="text-success mt-2">共 ${wiresToCut.length} 种线路组合需要剪断</p>
+                    `;
+                } else {
+                    resultElement.innerHTML = '<p class="text-warning">没有需要剪断的线路</p>';
+                }
+            }
+
+            reset() {
+                // 重置状态
+                this.state = {
+                    serialType: null,
+                    battery: null,
+                    port: null
+                };
+
+                // 重置序列号选择
+                document.querySelectorAll('#complex-new-serial-odd, #complex-new-serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
+
+                // 重置电池数量选择
+                document.querySelectorAll('[data-battery]').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // 重置端口情况选择
+                document.querySelectorAll('[data-port]').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // 更新结果
+                this.updateResult();
+            }
+        }
+
         // 复杂线路模块
         class ComplexWiresModule {
             constructor() {
@@ -2680,10 +3183,13 @@
                     });
                 });
 
-                // 序列号输入
-                document.getElementById('complex-serial-last').addEventListener('input', (e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-                    this.updateInstruction();
+                // 序列号奇偶选择
+                document.getElementById('complex-serial-odd').addEventListener('click', () => {
+                    this.setSerialType('odd');
+                });
+
+                document.getElementById('complex-serial-even').addEventListener('click', () => {
+                    this.setSerialType('even');
                 });
 
                 // 清空按钮
@@ -2727,7 +3233,7 @@
 
             updateInstruction() {
                 const instructionElement = document.getElementById('complex-instruction');
-                const serialLast = document.getElementById('complex-serial-last').value;
+                const serialType = this.getSerialType();
 
                 // 检查是否有足够的信息来生成指示
                 if (!this.state.led || !this.state.color || this.state.star === null) {
@@ -2739,13 +3245,13 @@
                     return;
                 }
 
-                // 检查序列号是否已输入（如果需要）
+                // 检查序列号是否已选择（如果需要）
                 if ((this.state.led === 'on' && this.state.color === 'white') ||
                     (this.state.led === 'off' && this.state.color === 'black' && this.state.star === 'yes')) {
-                    if (!serialLast) {
+                    if (!serialType) {
                         instructionElement.innerHTML = `
                             <div class="text-center">
-                                <p class="text-warning">请输入序列号末位数字以获取准确指示</p>
+                                <p class="text-warning">请选择序列号末位奇偶性以获取准确指示</p>
                             </div>
                         `;
                         return;
@@ -2753,7 +3259,8 @@
                 }
 
                 // 生成拆除指示
-                const shouldCut = this.shouldCutWire(serialLast ? parseInt(serialLast) : null);
+                const serialDigit = this.getSerialLastDigit();
+                const shouldCut = this.shouldCutWire(serialDigit);
                 const action = shouldCut ? '剪断该线' : '不要剪断该线';
                 const color = this.getColorName(this.state.color);
                 const ledStatus = this.state.led === 'on' ? '亮起' : '熄灭';
@@ -2885,11 +3392,43 @@
                     btn.classList.remove('active');
                 });
 
-                // 保留序列号末位，不清空
-                // document.getElementById('complex-serial-last').value = '';
+                // 重置序列号选择
+                document.querySelectorAll('#complex-serial-odd, #complex-serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
 
                 // 更新指示
                 this.updateInstruction();
+            }
+
+            setSerialType(type) {
+                // 移除所有按钮的active状态
+                document.querySelectorAll('#complex-serial-odd, #complex-serial-even').forEach(btn => {
+                    btn.classList.remove('active', 'odd', 'even');
+                });
+
+                // 添加当前按钮的active状态
+                const activeBtn = document.getElementById(type === 'odd' ? 'complex-serial-odd' : 'complex-serial-even');
+                activeBtn.classList.add('active', type);
+
+                this.updateInstruction();
+            }
+
+            getSerialType() {
+                const oddBtn = document.getElementById('complex-serial-odd');
+                const evenBtn = document.getElementById('complex-serial-even');
+
+                if (oddBtn.classList.contains('active')) {
+                    return 'odd';
+                } else if (evenBtn.classList.contains('active')) {
+                    return 'even';
+                }
+                return null;
+            }
+
+            getSerialLastDigit() {
+                const type = this.getSerialType();
+                return type === 'odd' ? 1 : (type === 'even' ? 0 : null);
             }
         }
 
@@ -3565,27 +4104,101 @@
                     'these', 'thing', 'think', 'three', 'water',
                     'where', 'which', 'world', 'would', 'write'
                 ];
-                this.availableLetters = ['', '', '', '', ''];
+
+                // 固定的可选字母表
+                this.positionLetters = [
+                    ['A', 'B', 'C', 'E', 'F', 'G', 'H', 'L', 'N', 'O', 'P', 'R', 'S', 'T', 'W'], // 第1位
+                    ['A', 'B', 'E', 'F', 'G', 'H', 'I', 'L', 'M', 'O', 'P', 'R', 'T', 'V'],     // 第2位
+                    ['A', 'E', 'G', 'H', 'I', 'L', 'O', 'R', 'T', 'U', 'V'],                     // 第3位
+                    ['A', 'C', 'D', 'E', 'G', 'H', 'I', 'L', 'N', 'O', 'R', 'S', 'T', 'U'],      // 第4位
+                    ['D', 'E', 'G', 'H', 'K', 'L', 'N', 'R', 'T', 'W', 'Y']                      // 第5位
+                ];
+
+                this.selectedLetters = [[], [], [], [], []]; // 支持多选
                 this.init();
             }
 
             init() {
+                this.generateLetterButtons();
                 this.bindEvents();
                 this.updatePossibleWords();
             }
 
-            bindEvents() {
-                // 绑定输入框事件
-                for (let i = 0; i < 5; i++) {
-                    const input = document.getElementById(`letters-${i}`);
-                    if (input) {
-                        input.addEventListener('input', (e) => {
-                            this.availableLetters[i] = e.target.value.toUpperCase();
-                            this.updatePossibleWords();
+            generateLetterButtons() {
+                for (let position = 0; position < 5; position++) {
+                    const grid = document.getElementById(`position-${position}-grid`);
+                    if (grid) {
+                        grid.innerHTML = '';
+
+                        // 只显示该位置的可选字母
+                        this.positionLetters[position].forEach(letter => {
+                            const button = document.createElement('button');
+                            button.className = 'password-letter-btn';
+                            button.textContent = letter;
+                            button.dataset.position = position;
+                            button.dataset.letter = letter;
+
+                            button.addEventListener('click', () => {
+                                this.toggleLetter(position, letter);
+                            });
+
+                            grid.appendChild(button);
                         });
                     }
                 }
+            }
 
+            toggleLetter(position, letter) {
+                const selectedArray = this.selectedLetters[position];
+                const index = selectedArray.indexOf(letter);
+
+                if (index > -1) {
+                    // 取消选择
+                    selectedArray.splice(index, 1);
+                } else {
+                    // 添加选择
+                    selectedArray.push(letter);
+                }
+
+                this.updateLetterButtons(position);
+                this.updateLetterDisplay(position);
+                this.updatePossibleWords();
+            }
+
+            updateLetterButtons(position) {
+                const grid = document.getElementById(`position-${position}-grid`);
+                if (!grid) return;
+
+                const buttons = grid.querySelectorAll('.password-letter-btn');
+                const selectedLetters = this.selectedLetters[position];
+
+                buttons.forEach(button => {
+                    const letter = button.dataset.letter;
+
+                    // 更新选中状态
+                    if (selectedLetters.includes(letter)) {
+                        button.classList.add('selected');
+                    } else {
+                        button.classList.remove('selected');
+                    }
+                });
+            }
+
+            updateLetterDisplay(position) {
+                const selectedText = document.getElementById(`position-${position}-selected`);
+
+                if (selectedText) {
+                    const selectedLetters = this.selectedLetters[position];
+
+                    if (selectedLetters.length > 0) {
+                        selectedText.textContent = `已选择 ${selectedLetters.length} 个字母: ${selectedLetters.join(', ')}`;
+                    } else {
+                        selectedText.textContent = '未选择';
+                    }
+                }
+            }
+
+            bindEvents() {
                 // 绑定重置按钮
                 const resetBtn = document.getElementById('reset-password');
                 if (resetBtn) {
@@ -3612,9 +4225,13 @@
             updatePossibleWords() {
                 const possibleWords = this.words.filter(word => {
                     for (let i = 0; i < 5; i++) {
-                        const available = this.availableLetters[i].toLowerCase();
-                        if (available && !available.includes(word[i])) {
-                            return false;
+                        const selectedLetters = this.selectedLetters[i];
+                        if (selectedLetters.length > 0) {
+                            // 检查单词的第i位是否在选中的字母中
+                            const wordLetter = word[i].toUpperCase();
+                            if (!selectedLetters.includes(wordLetter)) {
+                                return false;
+                            }
                         }
                     }
                     return true;
@@ -3625,39 +4242,65 @@
                     if (possibleWords.length === 0) {
                         wordsList.innerHTML = '<span class="text-danger">没有找到匹配的单词</span>';
                     } else {
-                        wordsList.innerHTML = possibleWords.map(word =>
-                            `<span class="word-item">${word}</span>`
-                        ).join('');
+                        wordsList.innerHTML = possibleWords.map(word => {
+                            const wordElement = document.createElement('span');
+                            wordElement.className = 'word-item';
+                            wordElement.textContent = word;
+
+                            // 添加点击事件，点击单词自动填充字母
+                            wordElement.addEventListener('click', () => {
+                                this.fillWord(word);
+                            });
+
+                            return wordElement.outerHTML;
+                        }).join('');
                     }
                 }
 
                 // 更新提示信息
                 const hint = document.getElementById('password-hint');
                 if (hint) {
+                    const selectedCount = this.selectedLetters.reduce((total, arr) => total + arr.length, 0);
+                    const positionCount = this.selectedLetters.filter(arr => arr.length > 0).length;
+
                     if (possibleWords.length === 1) {
                         hint.innerHTML = `<span class="text-success">唯一可能的单词: ${possibleWords[0]}</span>`;
                     } else if (possibleWords.length > 0) {
-                        hint.innerHTML = `找到 ${possibleWords.length} 个可能的单词，请继续输入更多限制条件`;
+                        hint.innerHTML = `已在 ${positionCount}/5 个位置选择了 ${selectedCount} 个字母，找到 ${possibleWords.length} 个可能的单词`;
                     } else {
-                        hint.innerHTML = '<span class="text-danger">没有找到匹配的单词，请检查输入的字母</span>';
+                        hint.innerHTML = '<span class="text-danger">没有找到匹配的单词，请尝试取消某些选择</span>';
                     }
                 }
             }
 
-            reset() {
-                // 重置输入框
-                this.availableLetters = ['', '', '', '', ''];
+            fillWord(word) {
+                // 自动填充单词的所有字母（单选模式）
                 for (let i = 0; i < 5; i++) {
-                    const input = document.getElementById(`letters-${i}`);
-                    if (input) {
-                        input.value = '';
+                    if (i < word.length) {
+                        const letter = word[i].toUpperCase();
+                        // 清空当前位置的所有选择，只选择目标字母
+                        this.selectedLetters[i] = [letter];
+                        this.updateLetterButtons(i);
+                        this.updateLetterDisplay(i);
                     }
+                }
+                this.updatePossibleWords();
+            }
+
+            reset() {
+                // 重置选中的字母
+                this.selectedLetters = [[], [], [], [], []];
+
+                // 重置显示
+                for (let i = 0; i < 5; i++) {
+                    this.updateLetterDisplay(i);
+                    this.updateLetterButtons(i);
                 }
 
                 // 重置提示信息
                 const hint = document.getElementById('password-hint');
                 if (hint) {
-                    hint.innerHTML = '请输入每个位置的可选字母，系统会自动显示可能的单词';
+                    hint.innerHTML = '请从每个位置选择一个或多个字母，系统会自动显示可能的单词';
                 }
 
                 // 重置单词列表
@@ -3840,6 +4483,7 @@
             // 初始化各个模块
             modules.wires = new WiresModule();
             modules.complexWires = new ComplexWiresModule();
+            modules.complexWiresNew = new ComplexWiresNewModule();
             modules.sequence = new SequenceModule();
             modules.memory = new MemoryModule();
             modules.password = new PasswordModule();
